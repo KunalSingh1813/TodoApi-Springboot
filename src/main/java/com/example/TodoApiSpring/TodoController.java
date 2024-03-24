@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/todos")
 public class TodoController {
     private static List<Todo> todoList;
 
@@ -19,7 +20,7 @@ public class TodoController {
         todoList.add(new Todo(2,true,"todo 2",2));
     }
 
-  @GetMapping("/todos")
+  @GetMapping
   public ResponseEntity<List<Todo>> getTodos(@RequestParam(required = false, defaultValue = "true") Boolean isCompleted){
         System.out.println("incoming query params: "+ isCompleted);
         return ResponseEntity.ok(todoList);
@@ -31,7 +32,7 @@ public class TodoController {
         return ResponseEntity.ok(todoList);
 }
 */
-@PostMapping("/todos")
+@PostMapping
 
     public ResponseEntity<Todo> createTodo(@RequestBody Todo newTodo){
         /*
@@ -55,14 +56,14 @@ public class TodoController {
  */
 
  //practice task: add a custom message along with 404 not found
- @GetMapping("/todos/{todoId}")
+ @GetMapping("/{todoId}")
  public ResponseEntity getTodoById(@PathVariable Long todoId){
 
      for(Todo todo: todoList){
          if(todo.getId()==todoId){
              return ResponseEntity.ok(todo);
          }
-     }
+        }
          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(TODO_NOT_FOUND);
      }
 
